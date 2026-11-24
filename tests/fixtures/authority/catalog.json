@@ -5510,5 +5510,67 @@
       "export",
       "filesystem"
     ]
+  },
+  {
+    "tool": "list_cinematic_motion_presets",
+    "args": {},
+    "required": [
+      "inspect"
+    ]
+  },
+  {
+    "tool": "author_hyperframes_composition",
+    "args": {},
+    "required": [
+      "inspect"
+    ]
+  },
+  {
+    "tool": "author_hyperframes_composition",
+    "args": {
+      "output_dir": "/approved/title"
+    },
+    "required": [
+      "inspect",
+      "filesystem"
+    ]
+  },
+  {
+    "tool": "check_hyperframes_composition",
+    "args": {},
+    "required": [
+      "inspect"
+    ]
+  },
+  {
+    "tool": "check_hyperframes_composition",
+    "args": {
+      "file_path": "/approved/index.html"
+    },
+    "required": [
+      "inspect",
+      "filesystem"
+    ]
+  },
+  {
+    "tool": "render_hyperframes_composition",
+    "args": {},
+    "required": [
+      "filesystem"
+    ]
+  },
+  {
+    "tool": "inspect_hyperframes_environment",
+    "args": {},
+    "required": [
+      "filesystem"
+    ]
+  },
+  {
+    "tool": "plan_cinematic_finishing",
+    "args": {},
+    "required": [
+      "inspect"
+    ]
   }
 ]

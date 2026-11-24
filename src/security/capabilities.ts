@@ -121,6 +121,8 @@ const INSPECT_TOOL_NAMES = new Set([
   "plan_chapter_markers",
   "plan_emphasis_zoom_keyframes",
   "plan_beat_montage",
+  "plan_cinematic_finishing",
+  "author_hyperframes_composition",
   "plan_cross_app_workflow",
   "plan_speaker_checkerboard",
   "plan_active_speaker_reframe",
@@ -168,6 +170,8 @@ const FILESYSTEM_TOOL_NAMES = new Set([
   "manage_media_watch",
   "preview_watched_media_import",
   "build_caption_artifact",
+  "render_hyperframes_composition",
+  "inspect_hyperframes_environment",
 ]);
 
 // These tools have deliberately mixed authority requirements that cannot be
@@ -589,6 +593,9 @@ export function capabilitiesForToolInvocation(toolName: string, args: unknown): 
   if (toolName === "inspect_after_effects_render_templates" && args && typeof args === "object" && (args as Record<string, unknown>).allow_temporary_queue_item === true) return ["inspect", "edit"];
   // Inline caption retiming is pure computation; reading input_path or writing
   // output_path touches the local filesystem and needs that authority too.
+  // HyperFrames authoring and checks are pure unless they write a project folder or read a file.
+  if (toolName === "author_hyperframes_composition" && args && typeof args === "object" && (args as Record<string, unknown>).output_dir !== undefined) return ["inspect", "filesystem"];
+  if (toolName === "check_hyperframes_composition" && args && typeof args === "object" && (args as Record<string, unknown>).file_path !== undefined) return ["inspect", "filesystem"];
   if (toolName === "retime_caption_file" && args && typeof args === "object" && ((args as Record<string, unknown>).input_path !== undefined || (args as Record<string, unknown>).output_path !== undefined)) return ["inspect", "filesystem"];
   // Caption planning and QA are pure computation unless they read or write workspace files.
   if (toolName === "plan_captions" || toolName === "check_captions" || toolName === "read_sequence_captions") {
@@ -633,7 +640,7 @@ export function capabilitiesForToolInvocation(toolName: string, args: unknown): 
 export function toolMayChangeState(toolName: string): boolean {
   if (toolName === "inspect_timeline_snapshot") return true;
   // Argument-dependent escalations handled specially above.
-  if (toolName === "plan_captions" || toolName === "check_captions" || toolName === "read_sequence_captions" || toolName === "export_interchange_uxp" || toolName === "prepare_transcript_workflow" || toolName === "set_metadata" || toolName === "audit_project_structure" || toolName === "retime_caption_file" || toolName === "inspect_after_effects_render_templates") return true;
+  if (toolName === "plan_captions" || toolName === "check_captions" || toolName === "read_sequence_captions" || toolName === "export_interchange_uxp" || toolName === "prepare_transcript_workflow" || toolName === "set_metadata" || toolName === "audit_project_structure" || toolName === "retime_caption_file" || toolName === "inspect_after_effects_render_templates" || toolName === "author_hyperframes_composition" || toolName === "check_hyperframes_composition") return true;
   const actionMap = ACTION_CAPABILITIES[toolName];
   const candidates: (readonly Capability[])[] = actionMap
     ? [...Object.values(actionMap), [capabilityForTool(toolName)]]

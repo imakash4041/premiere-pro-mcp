@@ -77,6 +77,7 @@ import { getTimelineQaTools } from "../../src/tools/timeline-qa.js";
 import { getSpeakerLayoutTools } from "../../src/tools/speaker-layout.js";
 import { getMaskFitTools } from "../../src/tools/mask-fit.js";
 import { getRhythmPlanTools } from "../../src/tools/rhythm-plans.js";
+import { getHyperframesTools } from "../../src/tools/hyperframes.js";
 import { getShortsIntelligenceTools } from "../../src/tools/shorts-intelligence.js";
 import { getCaptionAuthoringTools } from "../../src/tools/caption-authoring.js";
 import { getCaptionPlanningTools } from "../../src/tools/caption-planning.js";
@@ -160,6 +161,7 @@ const ALL_MODULES: Array<{
   { name: "reaction-shorts", getter: getReactionShortsTools, minTools: 3 },
   { name: "shorts-intelligence", getter: getShortsIntelligenceTools, minTools: 2 },
   { name: "rhythm-plans", getter: getRhythmPlanTools, minTools: 2 },
+  { name: "hyperframes", getter: () => getHyperframesTools(), minTools: 6 },
   { name: "speaker-layout", getter: getSpeakerLayoutTools, minTools: 2 },
   { name: "mask-fit", getter: getMaskFitTools, minTools: 1 },
   { name: "timeline-qa", getter: getTimelineQaTools, minTools: 2 },
@@ -254,11 +256,11 @@ describe("Total Tool Count", () => {
     for (const mod of ALL_MODULES) {
       total += Object.keys(mod.getter(bridgeOptions)).length;
     }
-    expect(total).toBe(440);
+    expect(total).toBe(446);
   });
 
-  it("there are 64 directly enumerated modules", () => {
-    expect(ALL_MODULES.length).toBe(64);
+  it("there are 65 directly enumerated modules", () => {
+    expect(ALL_MODULES.length).toBe(65);
   });
 });
 

@@ -47,6 +47,7 @@ const READ_ONLY_TOOLS = new Set([
   "plan_chapter_markers",
   "plan_emphasis_zoom_keyframes",
   "plan_beat_montage",
+  "plan_cinematic_finishing",
   "plan_cross_app_workflow",
   "plan_speaker_checkerboard",
   "plan_active_speaker_reframe",
